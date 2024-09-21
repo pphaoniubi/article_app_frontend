@@ -1,52 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, Button, FlatList, StyleSheet, TouchableOpacity, ScrollView  } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import ArticleScreen from './ArticleScreen'; // Import the new screen
 
-const App = () => {
+const Stack = createStackNavigator();
+
+const HomeScreen = ({ navigation }) => {
   const [articles, setArticles] = useState([]);
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  // Fetch the articles from Spring Boot when the component loads
   useEffect(() => {
     axios.get('http://10.0.2.2:8080/api/articles/titles')
       .then(response => {
-        setArticles(response.data);  // Set the articles from the response data
+        setArticles(response.data);
       })
       .catch(error => console.error('Error fetching article titles:', error));
   }, []);
 
-  // Function to open the article modal
-  const openArticle = (article) => {
-    // Fetch the content of the article and increment the read count
-    axios.get(`http://10.0.2.2:8080/api/articles/${article.id}`)
-      .then(response => {
-        setSelectedArticle(response.data);  // Set the full article content
-        setIsModalVisible(true);
-      })
-      .catch(error => console.error('Error fetching article content:', error));
-
-    // Increment the read count
-    axios.put(`http://10.0.2.2:8080/api/articles/${article.id}/increment-read-count`, null, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      withCredentials: true,
-    })
-    .then(response => {
-      console.log(response.status);
-      console.log("Read count incremented for article:", article.id);
-    })
-    .catch(error => console.error('Error incrementing read count:', error));
-  };
-
-  // Close the modal
-  const closeModal = () => {
-    setIsModalVisible(false);
-  };
-
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item} onPress={() => openArticle(item)}>
+    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Article', { id: item.id })}>
       <Text style={styles.title}>{item.title}</Text>
     </TouchableOpacity>
   );
@@ -58,25 +31,18 @@ const App = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
       />
-      {selectedArticle && (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>{selectedArticle.title}</Text>
-              <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                <Text style={styles.modalContent}>{selectedArticle.content}</Text>
-              </ScrollView>
-              <Button title="Close" onPress={closeModal} />
-            </View>
-          </View>
-        </Modal>
-      )}
     </View>
+  );
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Articles' }} />
+        <Stack.Screen name="Article" component={ArticleScreen} options={{ title: 'Article Details' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -93,27 +59,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-  },
-  modalBackground: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContainer: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  modalContent: {
-    fontSize: 16,
   },
 });
 
