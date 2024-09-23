@@ -19,7 +19,7 @@ public class ArticleController {
     // Get all article titles
     @GetMapping("/titles")
     public List<Map<String, Object>> getAllArticleTitles() {
-        return articleService.getAllTitles();
+        return articleService.getAllArticleInfo();
     }
 
     @PutMapping("/{id}/increment-read-count")
@@ -41,5 +41,7 @@ public class ArticleController {
                 .map(article -> ResponseEntity.ok(article))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
 
 }

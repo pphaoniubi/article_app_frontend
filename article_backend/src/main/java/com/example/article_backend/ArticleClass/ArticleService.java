@@ -29,12 +29,15 @@ public class ArticleService {
         return article.getReadCount(); // Return the read count
     }
 
-    public List<Map<String, Object>> getAllTitles() {
+    public List<Map<String, Object>> getAllArticleInfo() {
         return articleRepository.findAll().stream()
                 .map(article -> {
                     Map<String, Object> titleInfo = new HashMap<>();
                     titleInfo.put("id", article.getId());
                     titleInfo.put("title", article.getTitle());
+                    titleInfo.put("category", article.getCategory()); // Assuming getCategory() returns the category
+                    titleInfo.put("publish_date", article.getPublishDate()); // Assuming getPublishDate() returns the publish date
+                    titleInfo.put("read_count", article.getReadCount());
                     return titleInfo;
                 }).collect(Collectors.toList());
     }

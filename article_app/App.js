@@ -21,6 +21,8 @@ const HomeScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Article', { id: item.id })}>
       <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.readCount}>{item.read_count} reads</Text>
+      <Text style={styles.readCount}>{item.publish_date}</Text>
     </TouchableOpacity>
   );
 
@@ -59,6 +61,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+  },
+  readCount: {
+    fontSize: 16,
+    color: '#666', // Optional: change color to make it less prominent
   },
 });
 

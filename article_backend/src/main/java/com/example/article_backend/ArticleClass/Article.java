@@ -3,6 +3,9 @@ package com.example.article_backend.ArticleClass;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 public class Article {
 
@@ -15,6 +18,7 @@ public class Article {
     private String content;
     private String category;
     private int readCount; // New field for read count
+    private LocalDate publishDate;
 
     // Constructor
     public Article(int id, String title, String content, String category) {
@@ -23,6 +27,7 @@ public class Article {
         this.content = content;
         this.category = category;
         this.readCount = 0; // Initialize read count to 0
+        this.publishDate = LocalDate.now();
     }
 
     public Article() {}
@@ -66,5 +71,15 @@ public class Article {
 
     public void incrementReadCount() {
         this.readCount++; // Increment the read count by 1
+    }
+
+    public LocalDate getPublishDate() { return publishDate; }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public void setReadCount(int readCount) {
+        this.readCount = readCount;
     }
 }
