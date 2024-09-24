@@ -30,8 +30,8 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.readCount}> {item.read_count}</Text>
           </View>
         </View>
+        <Text style={styles.publish_date}>发布时间：{item.publish_date}</Text>
       </TouchableOpacity>
-      <Text style={styles.publish_date}>发布时间：{item.publish_date}</Text>
     </View>
   );
 
@@ -64,9 +64,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: 'rgb(214, 214, 194)', // Set the grey background color here
     padding: 15,
     marginVertical: 8,
+    borderRadius: 5, // Optional: Add some rounding to the corners for a nicer look
   },
   itemRow: {
     flexDirection: 'row',
@@ -91,5 +92,6 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   },
 });
+
 
 export default App;
