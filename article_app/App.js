@@ -3,7 +3,8 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import ArticleScreen from './ArticleScreen'; // Import the new screen
+import ArticleScreen from './ArticleScreen';
+import Icon from 'react-native-vector-icons/Ionicons'; // For the eye icon
 
 const Stack = createStackNavigator();
 
@@ -19,11 +20,19 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Article', { id: item.id })}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.readCount}>{item.read_count} reads</Text>
-      <Text style={styles.readCount}>{item.publish_date}</Text>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Article', { id: item.id })}>
+        <View style={styles.itemRow}>
+          <Text style={styles.title}>{item.id}. {item.title}</Text>
+          {/* Separate Text component for the read count */}
+          <View style={styles.readCountContainer}>
+            <Icon name="eye-outline" size={16} color="#666" />
+            <Text style={styles.readCount}> {item.read_count}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <Text style={styles.publish_date}>发布时间：{item.publish_date}</Text>
+    </View>
   );
 
   return (
@@ -59,12 +68,27 @@ const styles = StyleSheet.create({
     padding: 15,
     marginVertical: 8,
   },
+  itemRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   title: {
     fontSize: 18,
   },
+  readCountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   readCount: {
     fontSize: 16,
-    color: '#666', // Optional: change color to make it less prominent
+    color: '#666',
+    marginLeft: 5,
+  },
+  publish_date: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 5,
+    textAlign: 'right'
   },
 });
 
