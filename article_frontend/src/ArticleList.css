@@ -1,0 +1,33 @@
+/* ArticleList.css */
+
+.article-list {
+    padding: 20px;
+}
+
+.article-title {
+    background-color: #f0f0f0; /* Light grey background */
+    border: 1px solid #ccc;    /* Light grey border */
+    padding: 20px;             /* Increase padding for a larger grey area */
+    border-radius: 5px;        /* Rounded corners */
+    text-decoration: none;      /* Remove underline from links */
+    color: #333;               /* Dark grey text color */
+    display: block;            /* Make link take full width */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    font-size: 18px;           /* Increase font size */
+}
+
+.article-title:hover {
+    background-color: #e0e0e0; /* Darker grey on hover */
+}
+
+/* Remove bullet points from the list */
+ul {
+    list-style-type: none;  /* Remove default bullets */
+    padding: 0;             /* Remove default padding */
+    margin: 0;              /* Remove default margin */
+}
+
+/* Add spacing between each <li> */
+li {
+    margin-bottom: 10px;     /* Adjust this value for desired spacing */
+}
