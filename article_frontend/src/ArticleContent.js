@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import "./ArticleContent.css";
 
 const ArticleContent = () => {
     const { id } = useParams(); // Get the article ID from the URL
     const [article, setArticle] = useState(null);
+    const [hasIncremented, setHasIncremented] = useState(false); // Flag to track if incremented
     console.log(id);
 
     useEffect(() => {
@@ -16,20 +18,23 @@ const ArticleContent = () => {
                 const response = await axios.get(`http://localhost:8080/api/articles/${id}`);
                 setArticle(response.data);
 
-                // Increment the read count
-                await incrementReadCount(id);
+                // Increment the read count only once
+                if (!hasIncremented) {
+                    await incrementReadCount(id);
+                    setHasIncremented(true); // Set the flag to true after incrementing
+                }
             } catch (error) {
                 console.error("Error fetching article:", error);
             }
         };
 
         fetchArticle();
-    }, [id]);
+    }, [id, hasIncremented]); // Added hasIncremented to the dependency array
 
     // Function to increment the read count
     const incrementReadCount = async (articleId) => {
         try {
-            await axios.post(`http://localhost:8080/api/articles/${articleId}/increment-read-count`);
+            await axios.put(`http://localhost:8080/api/articles/${articleId}/increment-read-count`);
             // You might want to handle any additional logic here, like updating state
         } catch (error) {
             console.error("Error incrementing read count:", error);
@@ -47,7 +52,7 @@ const ArticleContent = () => {
     ));
 
     return (
-        <div>
+        <div className="article-content">
             <h1>{article.title}</h1>
             <div>
                 <FontAwesomeIcon icon={faEye} /> {article.readCount} {/* Eye icon with read count */}

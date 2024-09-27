@@ -1,0 +1,8 @@
+/* ArticleContent.css */
+
+.article-content {
+    padding: 20px; /* Add padding to create space inside the container */
+    margin: 20px; /* Optional: Add margin to create space outside the container */
+    background-color: #cfcece; /* Optional: Add background color for better visibility */
+    border-radius: 5px; /* Optional: Round corners */
+}
