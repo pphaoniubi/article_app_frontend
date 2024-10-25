@@ -9,7 +9,7 @@ const ArticleList = () => {
 
     useEffect(() => {
         // Fetch article titles and details
-        fetch('http://localhost:8080/api/articles/titles')
+        fetch('https://seashell-app-79rfx.ondigitalocean.app/api/articles/titles')
             .then(response => response.json())
             .then(data => setArticles(data));
     }, []);
