@@ -24,9 +24,9 @@ const ArticleList = () => {
                             {article.title}
                             <div className="article-info">
                                 <span>
-                                    <FontAwesomeIcon icon={faEye} /> {article.read_count}
+                                    <FontAwesomeIcon icon={faEye} /> {article.readCount}
                                 </span>
-                                <p>Published On: {new Date(article.publish_date).toLocaleDateString()}</p>
+                                <p>Published On: {new Date(article.publishDate).toLocaleDateString()}</p>
                             </div>
                         </Link>
                     </li>
