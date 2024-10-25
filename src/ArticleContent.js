@@ -15,7 +15,7 @@ const ArticleContent = () => {
         // Function to fetch article data
         const fetchArticle = async () => {
             try {
-                const response = await axios.get(`https://seashell-app-79rfx.ondigitalocean.app/api/articles/${id}`);
+                const response = await axios.get(`https://goldfish-app-a5skb.ondigitalocean.app/api/articles/${id}`);
                 setArticle(response.data);
 
                 // Increment the read count only once
@@ -34,7 +34,7 @@ const ArticleContent = () => {
     // Function to increment the read count
     const incrementReadCount = async (articleId) => {
         try {
-            await axios.put(`https://seashell-app-79rfx.ondigitalocean.app/api/articles/${articleId}/increment-read-count`);
+            await axios.put(`https://goldfish-app-a5skb.ondigitalocean.app/api/articles/${articleId}/increment-read-count`);
             // You might want to handle any additional logic here, like updating state
         } catch (error) {
             console.error("Error incrementing read count:", error);
